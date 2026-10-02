@@ -1,0 +1,50 @@
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Node.js and Next.js
+**/node_modules/
+**/.next/
+**/out/
+**/coverage/
+**/dist/
+**/.turbo/
+**/*.tsbuildinfo
+**/next-env.d.ts
+
+# Java and Maven
+**/target/
+**/.mvn/wrapper/maven-wrapper.jar
+**/build/
+
+# IDE and editor files
+.idea/
+*.iml
+*.ipr
+*.iws
+*.class
+.classpath
+.factorypath
+.project
+.settings/
+.vscode/*.log
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Logs and debug output
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Certificates and local secrets
+*.pem
+*.key
+*.p12
+
+# Deployment tooling
+.vercel/
