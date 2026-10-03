@@ -2,6 +2,7 @@ package GemPilot.backend.services.ai;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.Map;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatModel;
@@ -54,13 +55,24 @@ public class ChatStreamHandler {
                     .doOnNext(token -> appendToken(emitter, fullReply, token))
                     .doOnError(err -> {
                         log.error("Chat stream error", err);
-                        emitter.completeWithError(err);
+                            try {
+                                emitter.send(SseEmitter.event().name("error")
+                                    .data(Map.of("message", "The AI service failed to respond. Try again."),
+                                        MediaType.APPLICATION_JSON));
+                            } catch (Exception ignored) {}
+                            emitter.complete();
                     })
                     .doOnComplete(() -> completeStream(
                             emitter, sessionId, fullReply, citations))
                     .subscribe();
         } catch (Exception ex) {
-            emitter.completeWithError(ex);
+             log.error("Chat stream setup error", ex);
+            try {
+                emitter.send(SseEmitter.event().name("error")
+                    .data(Map.of("message", "Could not start the AI response."),
+                        MediaType.APPLICATION_JSON));
+            } catch (Exception ignored) {}
+            emitter.complete();
         }
 
         return emitter;
@@ -96,7 +108,13 @@ public class ChatStreamHandler {
             emitter.send(SseEmitter.event().name("done").data("[DONE]"));
             emitter.complete();
         } catch (Exception ex) {
-            emitter.completeWithError(ex);
+            log.error("Chat stream setup error", ex);
+            try {
+                emitter.send(SseEmitter.event().name("error")
+                    .data(Map.of("message", "Could not start the AI response."),
+                        MediaType.APPLICATION_JSON));
+            } catch (Exception ignored) {}
+            emitter.complete();
         }
     }
 

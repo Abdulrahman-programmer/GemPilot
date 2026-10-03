@@ -62,7 +62,7 @@ public class SecaurityConfig {
                                 response.setStatus(HttpStatus.NO_CONTENT.value()))
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
-                        .deleteCookies("DEVPILOT_SESSION"));
+                        .deleteCookies("GEMPILOT_SESSION"));
     return http.build();   
     }
 

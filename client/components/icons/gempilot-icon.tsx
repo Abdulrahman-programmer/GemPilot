@@ -2,15 +2,15 @@ import type { SVGProps } from "react";
 
 import { cn } from "@/lib/utils";
 
-type DevPilotIconProps = SVGProps<SVGSVGElement> & {
+type GemPilotIconProps = SVGProps<SVGSVGElement> & {
   variant?: "color" | "mono";
 };
 
-export function DevPilotIcon({
+export function GemPilotIcon({
   className,
   variant = "color",
   ...props
-}: DevPilotIconProps) {
+}: GemPilotIconProps) {
   const mono = variant === "mono";
 
   return (
@@ -53,7 +53,7 @@ export function DevPilotIcon({
   );
 }
 
-export function DevPilotLogo({
+export function GemPilotLogo({
   className,
   ...props
 }: SVGProps<SVGSVGElement>) {

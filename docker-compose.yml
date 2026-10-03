@@ -4,22 +4,22 @@ services:
     container_name: my_postgres
 
     environment:
-      POSTGRES_USER: devpilot
+      POSTGRES_USER: gempilot
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: devpilot
+      POSTGRES_DB: gempilot
 
     ports:
       - "5432:5432"
 
     volumes:
-      - devpilot_pg_data:/var/lib/postgresql
+      - gempilot_pg_data:/var/lib/postgresql
       - ./docker/postgres/init-extensions.sql:/docker-entrypoint-initdb.d/01-extensions.sql:ro
 
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U devpilot -d postgres"]
+      test: ["CMD-SHELL", "pg_isready -U gempilot -d postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
 
 volumes:
-  devpilot_pg_data:
+  gempilot_pg_data:

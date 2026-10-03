@@ -43,7 +43,7 @@ public class CodeFileFilter {
             "composer.lock",
             "cargo.lock",
             "poetry.lock");
-// backend\src\main\java\devPilot\backend\repository\filename.java
+// backend\src\main\java\GemPilot\backend\repository\filename.java
     public boolean isEligible(String path, long sizeBytes, long maxFileBytes) {
         if (path == null || path.isBlank()) {
             return false;

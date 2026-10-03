@@ -43,6 +43,8 @@ export async function streamChatMessage(
   const reader = res.body.getReader();
   const decoder = new TextDecoder();
   let buffer = "";
+  let streamError: Error | null = null;
+  let gotReply = false;
 
   while (true) {
     const { done, value } = await reader.read();
@@ -76,10 +78,15 @@ export async function streamChatMessage(
         } else if (event === "user_message") {
           handlers.onUserMessage?.(JSON.parse(data) as ChatMessage);
         } else if (event === "assistant_message") {
+          gotReply = true;
           handlers.onAssistantMessage?.(JSON.parse(data) as ChatMessage);
-        } else if (event === "done") {
-          handlers.onDone?.();
+        } else if (event === "error") {
+          streamError = new Error(
+            (JSON.parse(data) as { message?: string }).message ??
+              "AI request failed"
+          );
         }
+        // "done" is handled once, after the loop
       } catch (err) {
         handlers.onError?.(
           err instanceof Error ? err : new Error("Failed to parse SSE event")
@@ -87,6 +94,9 @@ export async function streamChatMessage(
       }
     }
   }
+
+  if (streamError) throw streamError;
+  if (!gotReply) throw new Error("Stream ended before a reply arrived");
 
   handlers.onDone?.();
 }

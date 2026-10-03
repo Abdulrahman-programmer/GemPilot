@@ -28,7 +28,9 @@
 .factorypath
 .project
 .settings/
+.vscode
 .vscode/*.log
+
 
 # Operating system files
 .DS_Store
