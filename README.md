@@ -86,7 +86,6 @@ The backend reads standard Spring environment-variable overrides. Common setting
 | `DB_USER` | `gempilot` | Database username |
 | `DB_PASS` | `postgres` | Database password |
 | `GEMINI_API_KEY` | Set in environment | Google GenAI chat API key |
-| `GEMINI_EMBEDDING_KEY` | Set in environment | Google GenAI embedding API key |
 | `GITHUB_CLIENT_ID` | Set in environment | GitHub OAuth client ID |
 | `GITHUB_CLIENT_SECRET` | Set in environment | GitHub OAuth client secret |
 | `FRONTEND_URL` | `http://localhost:3000` | Frontend URL used by backend auth redirects |
